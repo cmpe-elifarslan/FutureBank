@@ -69,7 +69,7 @@ def make_predictions(input_csv):
     loaded_pipeline = joblib.load(pipeline_filename)
 
     # Assuming you have new data for prediction
-    new_data =data.iloc[1]  # Use double brackets to select the first row as a DataFrame
+    new_data =data.iloc[[1]]  # Use double brackets to select the first row as a DataFrame
 
     # Make predictions using the loaded pipeline
     predictions = loaded_pipeline.predict(new_data)
