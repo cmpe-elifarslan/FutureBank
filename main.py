@@ -210,7 +210,7 @@ if authentication_status == True:
                 st.write("no")
             if result==1:
                 st.write("yes")
-            st.dataframe(df)
+            
 
                        
 #option 2:
