@@ -220,6 +220,7 @@ if authentication_status == True:
     if selected=="data view" :
         show=db.fetch_all_data() 
         df = pd.DataFrame(show)
+        df = df.sort_values(by='time')
         st.dataframe(df)
 
     
