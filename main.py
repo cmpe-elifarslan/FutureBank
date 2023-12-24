@@ -212,6 +212,8 @@ if authentication_status == True:
                 st.subheader("no")
             if result==1:
                 st.subheader("yes")
+            latest_row = df[df['time'] == df['time'].max()]
+            print(latest_row)
             
             
 
