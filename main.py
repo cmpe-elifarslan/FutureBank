@@ -223,6 +223,7 @@ if authentication_status == True:
         show=db.fetch_all_data() 
         df = pd.DataFrame(show)
         df = df.sort_values(by='time')
-        st.dataframe(df)
+        st.write(df.to_string(index=True))
+        
 
     
