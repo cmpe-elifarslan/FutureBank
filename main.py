@@ -207,9 +207,9 @@ if authentication_status == True:
             result=make_predictions('data.csv')            
             st.title("Has the client subscribed a term deposit?")
             if result==0:
-                st.write("no")
+                st.subheader("no")
             if result==1:
-                st.write("yes")
+                st.subheader("yes")
             
             
 
