@@ -7,6 +7,7 @@ from pathlib import Path
 import streamlit_authenticator as stauth
 import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder, LabelBinarizer
+import numpy as np
 
 def apply_preprocessing(data):
     # Initialize encoders
@@ -65,6 +66,7 @@ def make_predictions(input_csv):
     data= data.drop(columns='key')    
     data = data.drop(columns=data.columns[0])
     data= data.drop(columns='time')
+    data= data.drop(columns='y')
     # Load the pipeline (assuming the filename is always the same)
     pipeline_filename = 'xgb_pipeline_filename.joblib'
     loaded_pipeline = joblib.load(pipeline_filename)
@@ -197,9 +199,10 @@ if authentication_status == True:
             nr_employed = st.number_input('Number of employees - quarterly indicator:')
             st.divider()            
             submitted = st.form_submit_button("add client data")
+            y="-"
         if submitted:
             #insert to database
-            db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed)
+            db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
             st.write("client data is added.")
             show=db.fetch_all_data() 
             df = pd.DataFrame(show)
@@ -207,13 +210,21 @@ if authentication_status == True:
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
             result=make_predictions('data.csv')            
+            if result[0] == 0:
+                db.put_value(-1,'y','no')
+            if result[0] == 1:
+                db.put_value(-1,'y','yes')
+            show2=db.fetch_all_data()                          
+            df_print=pd.DataFrame(show2)
+            df_print = df_print.sort_values(by='time')             
             st.title("Has the client subscribed a term deposit?")
-            if result==0:
+            if 0 in result:
                 st.subheader("no")
-            if result==1:
+            if 1 in result:
                 st.subheader("yes")            
-            latest_row = df[df['time'] == df['time'].max()]
-            st.dataframe(df)
+            latest_row = df_print[df_print['time'] == df_print['time'].max()]
+
+            st.dataframe(latest_row)
             
             
 
