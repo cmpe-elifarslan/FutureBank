@@ -17,45 +17,45 @@ def apply_preprocessing(data):
     # Encode 'job' column
     job_order = [['unknown','unemployed','student','retired','housemaid','services','blue-collar','technician','self-employed','management','admin.','entrepreneur']]
     ordinal_encoder_job = OrdinalEncoder(categories=job_order)
-    data.loc[:, 'job'] = ordinal_encoder_job.fit_transform(data[['job']])
+    data.loc[-1, 'job'] = ordinal_encoder_job.fit_transform(data[['job']])
 
     # Encode 'marital' column
-    data['marital'] = label_encoder.fit_transform(data['marital'])
+    data[-1,'marital'] = label_encoder.fit_transform(data['marital'])
 
     # Encode 'education' column
     education_order = [['illiterate','unknown','basic.4y','basic.6y','basic.9y','high.school','university.degree','professional.course']]
     ordinal_encoder_education = OrdinalEncoder(categories=education_order)
-    data['education'] = ordinal_encoder_education.fit_transform(data[['education']])
+    data[-1,'education'] = ordinal_encoder_education.fit_transform(data[['education']])
 
     # Encode 'default' column
     default_order = [['no','unknown','yes']]
     ordinal_encoder_default = OrdinalEncoder(categories=default_order)
-    data['default'] = ordinal_encoder_default.fit_transform(data[['default']])
+    data[-1,'default'] = ordinal_encoder_default.fit_transform(data[['default']])
 
     # Encode 'housing' column
     housing_order = [['no','unknown','yes']]
     ordinal_encoder_housing = OrdinalEncoder(categories=housing_order)
-    data['housing'] = ordinal_encoder_housing.fit_transform(data[['housing']])
+    data[-1,'housing'] = ordinal_encoder_housing.fit_transform(data[['housing']])
 
     # Encode 'loan' column
     loan_order = [['no','unknown','yes']]
     ordinal_encoder_loan = OrdinalEncoder(categories=loan_order)
-    data['loan'] = ordinal_encoder_loan.fit_transform(data[['loan']])
+    data[-1,'loan'] = ordinal_encoder_loan.fit_transform(data[['loan']])
 
     # Encode 'contact' column using LabelBinarizer
-    data['contact'] = label_binarizer.fit_transform(data['contact'])
+    data[-1,'contact'] = label_binarizer.fit_transform(data['contact'])
 
     # Encode 'month' column
-    data['month'] = label_encoder.fit_transform(data['month'])
+    data[-1,'month'] = label_encoder.fit_transform(data['month'])
 
     # Encode 'day_of_week' column
-    data['day_of_week'] = label_encoder.fit_transform(data['day_of_week'])
+    data[-1,'day_of_week'] = label_encoder.fit_transform(data['day_of_week'])
 
     # Encode 'poutcome' column
     poutcome_order = [['nonexistent','failure','success']]
     ordinal_encoder_poutcome = OrdinalEncoder(categories=poutcome_order)
-    data['poutcome'] = ordinal_encoder_poutcome.fit_transform(data[['poutcome']])
-    data['duration_square']=data['duration'] ** 2
+    data[-1,'poutcome'] = ordinal_encoder_poutcome.fit_transform(data[['poutcome']])
+    data[-1,'duration_square']=data[-1,'duration'] ** 2
     data=data.drop(columns='nr.employed')
 
     return data
