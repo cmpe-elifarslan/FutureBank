@@ -212,7 +212,7 @@ if authentication_status == True:
                 st.subheader("no")
             if result==1:
                 st.subheader("yes")
-            df = df.drop(columns=[0])
+            df = df.drop(columns=df.columns[0])
             latest_row = df[df['time'] == df['time'].max()]
             st.dataframe(latest_row)
             
@@ -224,7 +224,7 @@ if authentication_status == True:
         show=db.fetch_all_data() 
         df = pd.DataFrame(show)
         df = df.sort_values(by='time')
-        df = df.drop(columns=[0])
+        df = df.drop(columns=df.columns[0])
         st.dataframe(df)
         
 
