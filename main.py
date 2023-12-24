@@ -209,7 +209,11 @@ if authentication_status == True:
             df = df.sort_values(by='time')
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
-            result=make_predictions('data.csv')            
+            result=make_predictions('data.csv')
+            if result[0] == 0:
+                st.subheader("no")
+            if result[0] == 1:
+                st.subheader("yes")        
             if result[0] == 0:
                 db.put_value(-1,'y','no')
             if result[0] == 1:
@@ -218,10 +222,7 @@ if authentication_status == True:
             df_print=pd.DataFrame(show2)
             df_print = df_print.sort_values(by='time')             
             st.title("Has the client subscribed a term deposit?")
-            if result[0] == 0:
-                st.subheader("no")
-            if result[0] == 1:
-                st.subheader("yes")            
+                
             latest_row = df_print[df_print['time'] == df_print['time'].max()]
             st.dataframe(latest_row)
             
