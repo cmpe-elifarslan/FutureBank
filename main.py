@@ -17,7 +17,7 @@ def apply_preprocessing(data):
     # Encode 'job' column
     job_order = [['unknown','unemployed','student','retired','housemaid','services','blue-collar','technician','self-employed','management','admin.','entrepreneur']]
     ordinal_encoder_job = OrdinalEncoder(categories=job_order)
-    data['job'] = ordinal_encoder_job.fit_transform(data[['job']])
+    data.loc[:, 'job'] = ordinal_encoder_job.fit_transform(data[['job']])
 
     # Encode 'marital' column
     data['marital'] = label_encoder.fit_transform(data['marital'])
