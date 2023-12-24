@@ -213,7 +213,7 @@ if authentication_status == True:
             if result==1:
                 st.subheader("yes")
             latest_row = df[df['time'] == df['time'].max()]
-            print(latest_row)
+            st.dataframe(latest_row)
             
             
 
