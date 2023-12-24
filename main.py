@@ -213,7 +213,7 @@ if authentication_status == True:
             if result==1:
                 st.subheader("yes")            
             latest_row = df[df['time'] == df['time'].max()]
-            st.dataframe(latest_row,index=False)
+            st.write(df, index=False)
             
             
 
@@ -223,7 +223,7 @@ if authentication_status == True:
         show=db.fetch_all_data() 
         df = pd.DataFrame(show)
         df = df.sort_values(by='time')       
-        st.dataframe(df,index=False)
+        st.write(df, index=False)
         
 
     
