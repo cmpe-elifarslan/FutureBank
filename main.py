@@ -64,6 +64,7 @@ def make_predictions(input_csv):
     data = pd.read_csv(input_csv, sep=',')
     data= data.drop(columns='key')    
     data = data.drop(columns=data.columns[0])
+    data= data.drop(columns='time')
     # Load the pipeline (assuming the filename is always the same)
     pipeline_filename = 'xgb_pipeline_filename.joblib'
     loaded_pipeline = joblib.load(pipeline_filename)
@@ -202,6 +203,7 @@ if authentication_status == True:
             st.write("client data is added.")
             show=db.fetch_all_data() 
             df = pd.DataFrame(show)
+            df = df.sort_values(by='time')
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
             result=make_predictions('data.csv')            
