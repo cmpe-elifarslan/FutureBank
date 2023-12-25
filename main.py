@@ -225,7 +225,7 @@ if authentication_status == True:
                 st.subheader("yes")
             
             latest_row = df[df['time'] == df['time'].max()]
-            st.dataframe(df)
+            st.dataframe(latest_row)
 
 #option 2:
     if selected=="data view" :
