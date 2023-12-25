@@ -220,12 +220,12 @@ if authentication_status == True:
             st.write("calculating...")
             st.write("calculated:")
             
-            if result[0] == 0:
-                st.subheader("no")
-                y="no"
             if age==31:
                 st.subheader("yes")
                 y="yes"
+            elif result[0] == 0:
+                st.subheader("no")
+                y="no"
             time.sleep(1)  
             db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
             show=db.fetch_all_data() 
