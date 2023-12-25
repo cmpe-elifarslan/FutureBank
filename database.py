@@ -15,7 +15,7 @@ def insert_data(age,job,marital,education, default,housing,loan,contact,month,da
                  "campaign":campaign,"pdays":pdays,"previous": previous,
                  "poutcome":poutcome,"emp.var.rate":emp_var_rate,"cons.price.idx":cons_price_idx,
                  "cons.conf.idx":cons_conf_idx,
-                 "euriborm":euribor3m,"nr.employed":nr_employed,"time": current_time,"y":y})
+                 "euribor3m":euribor3m,"nr.employed":nr_employed,"time": current_time,"y":y})
     
 def fetch_all_data():
     res= db.fetch()
