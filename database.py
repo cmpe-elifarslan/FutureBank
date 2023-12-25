@@ -2,7 +2,6 @@ import os
 from deta import Deta
 from dotenv import load_dotenv
 import datetime
-import pandas as pd
 load_dotenv(".env")
 DETA_KEY = os.getenv("DETA_KEY")
 
@@ -16,7 +15,7 @@ def insert_data(age,job,marital,education, default,housing,loan,contact,month,da
                  "campaign":campaign,"pdays":pdays,"previous": previous,
                  "poutcome":poutcome,"emp.var.rate":emp_var_rate,"cons.price.idx":cons_price_idx,
                  "cons.conf.idx":cons_conf_idx,
-                 "euribor3m":euribor3m,"nr.employed":nr_employed,"time": current_time})
+                 "euriborm":euribor3m,"nr.employed":nr_employed,"time": current_time})
     
 def fetch_all_data():
     res= db.fetch()
