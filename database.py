@@ -2,6 +2,7 @@ import os
 from deta import Deta
 from dotenv import load_dotenv
 import datetime
+import pandas as pd
 load_dotenv(".env")
 DETA_KEY = os.getenv("DETA_KEY")
 
@@ -20,8 +21,9 @@ def insert_data(age,job,marital,education, default,housing,loan,contact,month,da
 def fetch_all_data():
     res= db.fetch()
     return res.items
-def put_value(row_index, column_name, new_value):
-    rows = db.fetch().items
-    row= rows[row_index]
-    row[column_name]= new_value  
-    db.put(row)
+
+def change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y):
+    all_items = db.fetch().items
+    last_item_id = all_items[-1]['key']
+    db.delete(last_item_id)
+    insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
