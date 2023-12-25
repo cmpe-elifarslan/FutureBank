@@ -21,3 +21,9 @@ def insert_data(age,job,marital,education, default,housing,loan,contact,month,da
 def fetch_all_data():
     res= db.fetch()
     return res.items
+
+def change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y):
+    all_items = db.fetch().items
+    last_item_id = all_items[-1]['key']
+    db.delete(last_item_id)
+    insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
