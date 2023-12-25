@@ -8,6 +8,7 @@ import streamlit_authenticator as stauth
 import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder, LabelBinarizer
 import numpy as np
+from deta import Deta
 
 def apply_preprocessing(data):
     # Initialize encoders
@@ -209,21 +210,23 @@ if authentication_status == True:
             df = df.sort_values(by='time')
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
-            result=make_predictions('data.csv')                
-            if result[0] == 0:
-                db.put_value(-1,'y','no')
-            elif result[0] == 1:
-                db.put_value(-1,'y','yes')
-            show2=db.fetch_all_data()                          
-            df_print=pd.DataFrame(show2)
-            df_print = df_print.sort_values(by='time')             
+            result=make_predictions('data.csv')
             st.title("Has the client subscribed a term deposit?")
             if result[0] == 0:
                 st.subheader("no")
+                y='no'
             elif result[0] == 1:
                 st.subheader("yes")
+                y='yes'
+            db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
+            show=db.fetch_all_data() 
+            df_print = pd.DataFrame(show)
             latest_row = df_print[df_print['time'] == df_print['time'].max()]
             st.dataframe(latest_row)
+
+            
+            
+            
             
             
 
@@ -234,7 +237,3 @@ if authentication_status == True:
         df = pd.DataFrame(show)
         df = df.sort_values(by='time')
         st.dataframe(df)
-
-        
-
-    
