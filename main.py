@@ -221,15 +221,17 @@ if authentication_status == True:
             st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
-                db.change_data("no")
+                y='no'
             elif result[0] == 1:
-                db.change_data("yes")
+                st.subheader("yes")
                 y='yes'
-            time.sleep(1)            
+            time.sleep(1)
+            db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
             show=db.fetch_all_data() 
             df_print = pd.DataFrame(show)
             latest_row = df_print[df_print['time'] == df_print['time'].max()]
             st.dataframe(latest_row)
+
 
             
             
