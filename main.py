@@ -219,7 +219,6 @@ if authentication_status == True:
             time.sleep(1)  
             st.write("calculating...")
             st.write("calculated:")
-            st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
                 db.change_data("no")
