@@ -199,9 +199,10 @@ if authentication_status == True:
             euribor3m = st.number_input('Euribor 3 month rate - daily indicator:',format="%.6f")
             st.divider()
             nr_employed = st.number_input('Number of employees - quarterly indicator:', format="%.6f")
-            st.divider()            
-            submitted = st.form_submit_button("add client data")
+            st.divider() 
             y="-"
+            submitted = st.form_submit_button("add client data")
+            
         if submitted:
             #insert to database
             db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
