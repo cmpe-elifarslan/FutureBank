@@ -218,10 +218,10 @@ if authentication_status == True:
             time.sleep(1)  
             st.write("calculating...")
             st.write("calculated:")
-            if result[0] == 0:
+            if result[len(result)-1] == 0:
                 st.subheader("no")
             
-            elif result[0] == 1:
+            elif result[len(result)-1] == 1:
                 st.subheader("yes")
             
             latest_row = df[df['time'] == df['time'].max()]
