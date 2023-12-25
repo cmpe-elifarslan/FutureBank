@@ -213,13 +213,17 @@ if authentication_status == True:
             df.to_csv(file_path, index=True)
             result=make_predictions('data.csv')
             st.title("Has the client subscribed a term deposit?")
+            time.sleep(1)
+            st.write("calculating...")
+            time.sleep(1)
+            st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
                 y='no'
             elif result[0] == 1:
                 st.subheader("yes")
                 y='yes'
-            time.sleep(2)
+            time.sleep(1)
             db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
             show=db.fetch_all_data() 
             df_print = pd.DataFrame(show)
