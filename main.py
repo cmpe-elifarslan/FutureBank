@@ -218,7 +218,7 @@ if authentication_status == True:
             while x!=1:
                 st.write("calculating...")
                 time.sleep(1)
-                x++
+                x=x+1
             empty_placeholder = st.empty()
             empty_placeholder.text("")
             st.write("calculated:")
