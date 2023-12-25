@@ -213,14 +213,8 @@ if authentication_status == True:
             df.to_csv(file_path, index=True)
             result=make_predictions('data.csv')
             st.title("Has the client subscribed a term deposit?")
-            time.sleep(1)
-            x=0
-            while x!=1:
-                st.write("calculating...")
-                time.sleep(1)
-                x=x+1
-            empty_placeholder = st.empty()
-            empty_placeholder.text("")
+            time.sleep(1)  
+            st.write("calculating...")
             st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
