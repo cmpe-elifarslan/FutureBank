@@ -7,6 +7,9 @@ from pathlib import Path
 import streamlit_authenticator as stauth
 import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder, LabelBinarizer
+import numpy as np
+from deta import Deta
+import time
 
 def apply_preprocessing(data):
     # Initialize encoders
@@ -56,6 +59,8 @@ def apply_preprocessing(data):
     data['poutcome'] = ordinal_encoder_poutcome.fit_transform(data[['poutcome']])
     data['duration_square']=data['duration'] ** 2
     data=data.drop(columns='nr.employed')
+    data=data.drop(columns='emp.var.rate')
+
 
     return data
 
@@ -65,6 +70,7 @@ def make_predictions(input_csv):
     data= data.drop(columns='key')    
     data = data.drop(columns=data.columns[0])
     data= data.drop(columns='time')
+    
     # Load the pipeline (assuming the filename is always the same)
     pipeline_filename = 'xgb_pipeline_filename.joblib'
     loaded_pipeline = joblib.load(pipeline_filename)
@@ -186,17 +192,18 @@ if authentication_status == True:
             poutcomes= ['failure','nonexistent','success']
             poutcome = st.selectbox('Outcome of the previous marketing campaign:',poutcomes)
             st.divider()
-            emp_var_rate= st.number_input('Employment variation rate - quarterly indicator ')
+            emp_var_rate= st.text_input('Employment variation rate - quarterly indicator ')
             st.divider()
-            cons_price_idx = st.number_input('Consumer price index - monthly indicator')
+            cons_price_idx = st.number_input('Consumer price index - monthly indicator',format="%.6f")
             st.divider()
-            cons_conf_idx= st.number_input('Consumer confidence index - monthly indicator:')
+            cons_conf_idx= st.number_input('Consumer confidence index - monthly indicator:',format="%.6f")
             st.divider()
-            euribor3m = st.number_input('Euribor 3 month rate - daily indicator:')
+            euribor3m = st.number_input('Euribor 3 month rate - daily indicator:',format="%.6f")
             st.divider()
-            nr_employed = st.number_input('Number of employees - quarterly indicator:')
-            st.divider()            
+            nr_employed = st.number_input('Number of employees - quarterly indicator:', format="%.6f")
+            st.divider() 
             submitted = st.form_submit_button("add client data")
+            
         if submitted:
             #insert to database
             db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed)
@@ -206,25 +213,23 @@ if authentication_status == True:
             df = df.sort_values(by='time')
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
-            result=make_predictions('data.csv')            
+            result=make_predictions('data.csv')
             st.title("Has the client subscribed a term deposit?")
-            if result==0:
+            time.sleep(1)  
+            st.write("calculating...")
+            st.write("calculated:")
+            if result[0] == 0:
                 st.subheader("no")
-            if result==1:
-                st.subheader("yes")            
+            
+            elif result[0] == 1:
+                st.subheader("yes")
+            
             latest_row = df[df['time'] == df['time'].max()]
             st.dataframe(df)
-            
-            
 
-                       
 #option 2:
     if selected=="data view" :
         show=db.fetch_all_data() 
         df = pd.DataFrame(show)
         df = df.sort_values(by='time')
         st.dataframe(df)
-
-        
-
-    
