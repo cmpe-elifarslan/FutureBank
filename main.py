@@ -198,7 +198,7 @@ if authentication_status == True:
             st.divider()
             euribor3m = st.number_input('Euribor 3 month rate - daily indicator:')
             st.divider()
-            nr_employed = st.number_input('Number of employees - quarterly indicator:')
+            nr_employed = st.number_input('Number of employees - quarterly indicator:', format="%.6f")
             st.divider()            
             submitted = st.form_submit_button("add client data")
             y="-"
