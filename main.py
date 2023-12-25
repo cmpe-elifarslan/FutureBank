@@ -59,6 +59,8 @@ def apply_preprocessing(data):
     data['poutcome'] = ordinal_encoder_poutcome.fit_transform(data[['poutcome']])
     data['duration_square']=data['duration'] ** 2
     data=data.drop(columns='nr.employed')
+    data=data.drop(columns='emp.var.rate')
+
 
     return data
 
@@ -190,18 +192,19 @@ if authentication_status == True:
             poutcomes= ['failure','nonexistent','success']
             poutcome = st.selectbox('Outcome of the previous marketing campaign:',poutcomes)
             st.divider()
-            emp_var_rate= st.number_input('Employment variation rate - quarterly indicator ')
+            emp_var_rate= st.text_input('Employment variation rate - quarterly indicator ')
             st.divider()
-            cons_price_idx = st.number_input('Consumer price index - monthly indicator')
+            cons_price_idx = st.number_input('Consumer price index - monthly indicator',format="%.6f")
             st.divider()
-            cons_conf_idx= st.number_input('Consumer confidence index - monthly indicator:')
+            cons_conf_idx= st.number_input('Consumer confidence index - monthly indicator:',format="%.6f")
             st.divider()
-            euribor3m = st.number_input('Euribor 3 month rate - daily indicator:')
+            euribor3m = st.number_input('Euribor 3 month rate - daily indicator:',format="%.6f")
             st.divider()
-            nr_employed = st.number_input('Number of employees - quarterly indicator:')
-            st.divider()            
-            submitted = st.form_submit_button("add client data")
+            nr_employed = st.number_input('Number of employees - quarterly indicator:', format="%.6f")
+            st.divider() 
             y="-"
+            submitted = st.form_submit_button("add client data")
+            
         if submitted:
             #insert to database
             db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
@@ -216,14 +219,14 @@ if authentication_status == True:
             time.sleep(1)  
             st.write("calculating...")
             st.write("calculated:")
+            st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
-                y='no'
+                db.change_data("no")
             elif result[0] == 1:
-                st.subheader("yes")
+                db.change_data("yes")
                 y='yes'
-            time.sleep(1)
-            db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
+            time.sleep(1)            
             show=db.fetch_all_data() 
             df_print = pd.DataFrame(show)
             latest_row = df_print[df_print['time'] == df_print['time'].max()]
