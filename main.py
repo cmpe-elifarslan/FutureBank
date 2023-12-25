@@ -214,8 +214,11 @@ if authentication_status == True:
             result=make_predictions('data.csv')
             st.title("Has the client subscribed a term deposit?")
             time.sleep(1)
-            st.write("calculating...")
-            time.sleep(1)
+            x=0
+            while x!=1:
+                st.write("calculating...")
+                time.sleep(1)
+                x++
             empty_placeholder = st.empty()
             empty_placeholder.text("")
             st.write("calculated:")
