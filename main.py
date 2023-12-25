@@ -190,7 +190,7 @@ if authentication_status == True:
             poutcomes= ['failure','nonexistent','success']
             poutcome = st.selectbox('Outcome of the previous marketing campaign:',poutcomes)
             st.divider()
-            emp_var_rate= st.number_input('Employment variation rate - quarterly indicator ')
+            emp_var_rate= st.text_input('Employment variation rate - quarterly indicator ')
             st.divider()
             cons_price_idx = st.number_input('Consumer price index - monthly indicator')
             st.divider()
