@@ -210,7 +210,7 @@ if authentication_status == True:
             st.write("client data is added.")
             show=db.fetch_all_data() 
             df = pd.DataFrame(show)
-            df = df.sort_values(by='time')
+            df = df.sort_values(by='time',ascending=False)
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
             result=make_predictions('data.csv')
@@ -231,5 +231,5 @@ if authentication_status == True:
     if selected=="data view" :
         show=db.fetch_all_data() 
         df = pd.DataFrame(show)
-        df = df.sort_values(by='time')
+        df = df.sort_values(by='time',ascending=False)
         st.dataframe(df)
