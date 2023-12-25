@@ -9,6 +9,7 @@ import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder, LabelBinarizer
 import numpy as np
 from deta import Deta
+import time
 
 def apply_preprocessing(data):
     # Initialize encoders
@@ -218,6 +219,7 @@ if authentication_status == True:
             elif result[0] == 1:
                 st.subheader("yes")
                 y='yes'
+            time.sleep(2)
             db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
             show=db.fetch_all_data() 
             df_print = pd.DataFrame(show)
