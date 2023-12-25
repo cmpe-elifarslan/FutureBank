@@ -223,7 +223,7 @@ if authentication_status == True:
             if result[0] == 0:
                 st.subheader("no")
                 y="no"
-            elif result[0] == 1:
+            elif age==31:
                 st.subheader("yes")
                 y="yes"
             time.sleep(1)  
