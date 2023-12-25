@@ -216,6 +216,7 @@ if authentication_status == True:
             time.sleep(1)
             st.write("calculating...")
             time.sleep(1)
+            empty_placeholder.text("")
             st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
