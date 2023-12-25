@@ -59,6 +59,8 @@ def apply_preprocessing(data):
     data['poutcome'] = ordinal_encoder_poutcome.fit_transform(data[['poutcome']])
     data['duration_square']=data['duration'] ** 2
     data=data.drop(columns='nr.employed')
+    data=data.drop(columns='emp.var.rate')
+
 
     return data
 
