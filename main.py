@@ -70,7 +70,7 @@ def make_predictions(input_csv):
     data= data.drop(columns='key')    
     data = data.drop(columns=data.columns[0])
     data= data.drop(columns='time')
-    data= data.drop(columns='y')
+    
     # Load the pipeline (assuming the filename is always the same)
     pipeline_filename = 'xgb_pipeline_filename.joblib'
     loaded_pipeline = joblib.load(pipeline_filename)
@@ -202,12 +202,11 @@ if authentication_status == True:
             st.divider()
             nr_employed = st.number_input('Number of employees - quarterly indicator:', format="%.6f")
             st.divider() 
-            y="-"
             submitted = st.form_submit_button("add client data")
             
         if submitted:
             #insert to database
-            db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
+            db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed)
             st.write("client data is added.")
             show=db.fetch_all_data() 
             df = pd.DataFrame(show)
@@ -221,25 +220,13 @@ if authentication_status == True:
             st.write("calculated:")
             if result[0] == 0:
                 st.subheader("no")
-                y='no'
+            
             elif result[0] == 1:
                 st.subheader("yes")
-                y='yes'
-            time.sleep(1)
-            db.change_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
-            show=db.fetch_all_data() 
-            df_print = pd.DataFrame(show)
-            latest_row = df_print[df_print['time'] == df_print['time'].max()]
-            st.dataframe(latest_row)
+            
+            latest_row = df[df['time'] == df['time'].max()]
+            st.dataframe(df)
 
-
-            
-            
-            
-            
-            
-
-                       
 #option 2:
     if selected=="data view" :
         show=db.fetch_all_data() 
