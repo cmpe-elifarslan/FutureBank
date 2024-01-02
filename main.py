@@ -212,6 +212,7 @@ if authentication_status == True:
             show=db.fetch_all_data() 
             df = pd.DataFrame(show)           
             latest_row = df[df['time'] == df['time'].max()]
+            st.write(latest_row)
             file_path = 'data.csv'
             latest_row.to_csv(file_path, index=True)
             result=make_predictions('data.csv')
