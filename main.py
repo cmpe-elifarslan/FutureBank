@@ -212,6 +212,7 @@ if authentication_status == True:
             show=db.fetch_all_data() 
             df = pd.DataFrame(show)
             df = df.sort_values(by='time')
+            st.dataframe(df)
             file_path = 'data.csv'
             df.to_csv(file_path, index=True)
             result=make_predictions('data.csv')
