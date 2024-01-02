@@ -210,11 +210,10 @@ if authentication_status == True:
             db.insert_data(age,job,marital,education, default,housing,loan,contact,month,day_of_week, duration,campaign,pdays, previous,poutcome,emp_var_rate,cons_price_idx,cons_conf_idx,euribor3m,nr_employed,y)
             st.write("client data is added.")
             show=db.fetch_all_data() 
-            df = pd.DataFrame(show)
-            df = df.sort_values(by='time')
-            st.dataframe(df)
+            df = pd.DataFrame(show)           
+            latest_row = df[df['time'] == df['time'].max()]
             file_path = 'data.csv'
-            df.to_csv(file_path, index=True)
+            latest_row.to_csv(file_path, index=True)
             result=make_predictions('data.csv')
             st.title("Has the client subscribed a term deposit?")
             time.sleep(1)  
